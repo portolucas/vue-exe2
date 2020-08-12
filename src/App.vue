@@ -1,19 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ProductList :list="list" />
+    <ProductForm :changeValue="changeValue" />
+    <h2>O número total de produtos é: {{ product }}</h2>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ProductList from "./components/ProductList";
+import ProductForm from "./components/ProductForm";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    ProductList,
+    ProductForm,
+  },
+  data() {
+    return {
+      list: [{ name: "iPhone", price: "21.000,000" }],
+    };
+  },
+  computed: {
+    product: {
+      get: function() {
+        return this.list.length;
+      },
+      set: function(newValue) {
+        this.list = this.list.concat({
+          name: newValue.name,
+          price: newValue.price,
+        });
+      },
+    },
+  },
+  methods: {
+    changeValue(newValue) {
+      this.product = newValue;
+    },
+  },
+};
 </script>
 
 <style>
